@@ -2,6 +2,7 @@
 This project contains three seperate scripts, trafficgen, collector, and plot. These scripts work together
 to create traffic to a website and measures the number of 200, 404, and 500 http response codes. The 
 scripts will then create a graph based on the retrieved information.
+
 --trafficgen--
     This script takes in three arguments, the url of the website to ping, the number of pings per second, and the
     jitter or variation in pings per second. The script works by calculating the upper and lower rps value using the 
@@ -9,6 +10,7 @@ scripts will then create a graph based on the retrieved information.
     the current time and calulates the time in two seconds. After that, the script performs the random rps*2 number
     of pings, then once that is finished checks how much time is remaining until the 2 seconds has passed, and waits 
     that amount of time.
+    
 --collector--
     This script runs while the traffic gen is running and periodically collects the number of 200, 404, and 500 http
     response codes and saves them to a tab seperated file defaulted to "collectedstats.tsv" with the current time as well. 
@@ -17,6 +19,7 @@ scripts will then create a graph based on the retrieved information.
     by the interval value. The second optional flag is statsUrl, this is the location of the website which the server
     is running on in case you change the port number, the final flag is statsFile, this is the file name that the 
     stats should be saved to.
+    
 --plot--
     This script processes the tab seperated log file created with the collector and uses matplotlib to create a graph
     called "graph.png". All three http status codes are imputted on the same graph. The x axis is the time since the 
@@ -26,8 +29,10 @@ scripts will then create a graph based on the retrieved information.
     two optional flags, fileName and graphFile, fileName is the name of the log file, graphFile is the
     name of the file you want to save.
 
+
 Running Instructions:
 These scripts should all be in the same folder for the easiest use, plot needs the data pulled from collector.
+
 --trafficgen--
     To run this script enter the name of the script followed by the argument flags and arguments url, rps, and jitter.
     Url should be the website name which you want to ping like http://localhost:8080/
@@ -49,6 +54,7 @@ These scripts should all be in the same folder for the easiest use, plot needs t
 	    python3 collector.py 
         or  python3 collector.py --interval <interval>
         ex: python3 collector.py --interval 20
+	
 --collector flags--
     These are optional flags that may be used to change the default values, any number of these flags may
     be used as long as the values are space seperated and follow the format --flag flagValue --flag flagValue..
@@ -68,11 +74,13 @@ These scripts should all be in the same folder for the easiest use, plot needs t
             ./collector.py --seconds <seconds>
         ex: ./collector.py --seconds 1200
 
+
 --plot--
     This script has no additional arguments so just use the name of the script.
 	    ./plot.py
          or you may call with python
             python3 plot.py
+	    
 --plot flags--
     These are optional flags that may be used to change the default values, any number of these flags may
     be used as long as the values are space seperated and follow the format --flag flagValue --flag flagValue..
@@ -84,6 +92,7 @@ These scripts should all be in the same folder for the easiest use, plot needs t
     is graph.png. Please only use .jpg and .png for this flag
             ./plot.py --graphFile <file>
         ex: ./plot.py --graphFile picture.jpg
+
 
 Required Extensions
 There are a couple required imports for this project that may require installing

@@ -1,49 +1,82 @@
 # Website_Monitoring_Scripting_Languages
 This project contains three seperate scripts, trafficgen, collector, and plot. These scripts work together
+
 to create traffic to a website and measures the number of 200, 404, and 500 http response codes. The 
+
 scripts will then create a graph based on the retrieved information.
 
 --trafficgen--
     This script takes in three arguments, the url of the website to ping, the number of pings per second, and the
+    
     jitter or variation in pings per second. The script works by calculating the upper and lower rps value using the 
+    
     jitter (rps*(1.0-jitter) and rps*(1.0+jitter)) and getting a random value between there. Then, the script gets
+    
     the current time and calulates the time in two seconds. After that, the script performs the random rps*2 number
+    
     of pings, then once that is finished checks how much time is remaining until the 2 seconds has passed, and waits 
+    
     that amount of time.
     
 --collector--
+
     This script runs while the traffic gen is running and periodically collects the number of 200, 404, and 500 http
-    response codes and saves them to a tab seperated file defaulted to "collectedstats.tsv" with the current time as well. 
+    
+    response codes and saves them to a tab seperated file defaulted to "collectedstats.tsv" with the current time as well.
+    
     This script takes in three optional arguments, the first is the collection interval, by default, this value is set to 
+    
     10 seconds. This script runs with the same get time/wait_time as the traffic gen except the wait time is determied 
+    
     by the interval value. The second optional flag is statsUrl, this is the location of the website which the server
+    
     is running on in case you change the port number, the final flag is statsFile, this is the file name that the 
+    
     stats should be saved to.
     
 --plot--
+
     This script processes the tab seperated log file created with the collector and uses matplotlib to create a graph
+    
     called "graph.png". All three http status codes are imputted on the same graph. The x axis is the time since the 
+    
     script started running, ex. 10 seconds, 20, 30.. and the y axis is the number of requests per second. This script 
+    
     uses a delta t of one minute, that means the rate of requests is not taken raw from each collection, but rather
+    
     compared against the rate of 1 minute ago, this creates a constantly moving rate to calculate. There are 
+    
     two optional flags, fileName and graphFile, fileName is the name of the log file, graphFile is the
+    
     name of the file you want to save.
 
 
 Running Instructions:
+
 These scripts should all be in the same folder for the easiest use, plot needs the data pulled from collector.
 
 --trafficgen--
+
     To run this script enter the name of the script followed by the argument flags and arguments url, rps, and jitter.
+    
     Url should be the website name which you want to ping like http://localhost:8080/
+    
     Rps should be the number of requests per second you want as a whole number, ex 300
+    
     Jitter should be the desired amount of fluctuation for your rps as a number between 0 and 1, ex 0.5
+    
     	    ./trafficgen.py --url <url> --rps <rps> --jitter <jitter>
+	    
         ex: ./trafficgen.py --url http://localhost:8080 --rps 500 --jitter 0.3
+	
              or you may call with python
+	     
             python3 trafficgen.py --url <url> --rps <rps> --jitter <jitter>
+	    
         ex: python3 trafficgen.py --url http://localhost:8080 --rps 500 --jitter 0.3
+	
     If any of these required values are omitted, default values will be provided, the default values
+    
     in order are http://localhost:8080/ 500 0.3
 
 --collector--
